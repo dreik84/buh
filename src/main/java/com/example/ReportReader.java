@@ -7,6 +7,26 @@ import java.nio.file.Path;
 
 public class ReportReader {
 
+    public MonthlyReport getMouthlyReport(int year, int month) {
+        String file = readFileContentsOrNull("src/main/resources/" + "m." + year + month + ".csv");
+        MonthlyReport report = new MonthlyReport();
+
+        if (file != null) {
+            String[] lines = file.split("\\n");
+
+            for (String line : lines) {
+                String[] lineContents = line.split(",");
+                String itemName = lineContents[0];
+                Boolean isExpense = Boolean.parseBoolean(lineContents[1]);
+                Integer quantity = Integer.parseInt(lineContents[2]);
+                BigDecimal sumOfOne = BigDecimal.valueOf(Double.parseDouble(lineContents[3]));
+                report.addRecord(itemName, isExpense, quantity, sumOfOne);
+            }
+        }
+
+        return report;
+    }
+
     public YearlyReport getYearlyReport(int year) {
         String file = readFileContentsOrNull("src/main/resources/" + "y." + year + ".csv");
         YearlyReport report = new YearlyReport();
@@ -17,7 +37,7 @@ public class ReportReader {
             for (String line : lines) {
                 String[] lineContents = line.split(",");
                 Integer month = Integer.parseInt(lineContents[0]);
-                BigDecimal amount = BigDecimal.valueOf(Long.parseLong(lineContents[1]));
+                BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(lineContents[1]));
                 Boolean isExpense = Boolean.parseBoolean(lineContents[2]);
                 report.addRecord(month, amount, isExpense);
             }
