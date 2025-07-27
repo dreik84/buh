@@ -10,11 +10,11 @@ public class ReportService {
 
     public ReportService() {
         monthlyReports = new ArrayList<>();
-        yearlyReports = new ArrayList<>();
+        yearlyReports = new ArrayList<>(12);
     }
 
     public void readAllMonthlyReports(int year) {
-        for (int i = 1; i < 12; i++) {
+        for (int i = 0; i < 12; i++) {
             monthlyReports.add(ReportReader.getMouthlyReport(year, i));
         }
     }
@@ -24,7 +24,11 @@ public class ReportService {
     }
 
     public void compareReports() {
-
+        for (int i = 0; i < 12; i++) {
+            if (monthlyReports.get(i).getTotal().compareTo(yearlyReports.get(0).getTotalByMonth(i)) != 0) {
+                System.out.println("Расхождение в отчётах за " + i + " месяц");
+            }
+        }
     }
 
     public void printMonthlyReportsInfo() {
