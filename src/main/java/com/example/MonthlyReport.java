@@ -6,15 +6,29 @@ import java.util.List;
 
 public class MonthlyReport {
 
-    List<Record> list;
+    private List<Record> records;
 
     public MonthlyReport() {
-        list = new ArrayList<>();
+        records = new ArrayList<>();
     }
 
     public void addRecord(String itemName, Boolean isExpense, Integer quantity, BigDecimal sumOfOne) {
         Record record = new Record(itemName, isExpense, quantity, sumOfOne);
-        list.add(record);
+        records.add(record);
+    }
+
+    public BigDecimal getTotal() {
+        BigDecimal total = BigDecimal.valueOf(0);
+
+        for (Record record : records) {
+            if (record.isExpense) {
+                total.subtract(record.sumOfOne.multiply(BigDecimal.valueOf(record.quantity)));
+            } else {
+                total.add(record.sumOfOne.multiply(BigDecimal.valueOf(record.quantity)));
+            }
+        }
+
+        return total;
     }
 
     private static class Record {
