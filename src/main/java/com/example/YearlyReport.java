@@ -4,6 +4,7 @@ import java.lang.reflect.RecordComponent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class YearlyReport {
 
@@ -32,6 +33,14 @@ public class YearlyReport {
         }
 
         return total;
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner sj = new StringJoiner(", ");
+
+        records.forEach(record -> sj.add("Месяц " + record.month + " "  + getTotalByMonth(record.month)));
+        return sj.toString();
     }
 
     private static class Record {
