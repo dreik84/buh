@@ -1,5 +1,6 @@
 package com.example;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,14 @@ public class ReportService {
     }
 
     public void compareReports() {
+
+        System.out.println(monthlyReports);
+        System.out.println(yearlyReports);
+
         for (int i = 0; i < 12; i++) {
-            if (monthlyReports.get(i).getTotal().compareTo(yearlyReports.get(0).getTotalByMonth(i)) != 0) {
+            BigDecimal yearlyTotal = yearlyReports.get(0).getTotalByMonth(i);
+            BigDecimal monthlyTotal = monthlyReports.get(i).getTotal();
+            if (!yearlyTotal.equals(monthlyTotal)) {
                 System.out.println("Расхождение в отчётах за " + i + " месяц");
             }
         }
