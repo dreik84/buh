@@ -3,6 +3,7 @@ package com.example;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class MonthlyReport {
 
@@ -29,6 +30,14 @@ public class MonthlyReport {
         }
 
         return total;
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner sj = new StringJoiner(", ");
+
+        records.forEach(record -> sj.add(record.quantity  + "*" + record.sumOfOne));
+        return sj.toString();
     }
 
     private static class Record {
