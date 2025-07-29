@@ -1,7 +1,6 @@
 package com.example;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -19,7 +18,7 @@ public class ReportReader {
                 String itemName = lineContents[0];
                 Boolean isExpense = Boolean.parseBoolean(lineContents[1]);
                 Integer quantity = Integer.parseInt(lineContents[2]);
-                BigDecimal sumOfOne = BigDecimal.valueOf(Double.parseDouble(lineContents[3]));
+                Double sumOfOne = Double.parseDouble(lineContents[3]);
                 report.addRecord(itemName, isExpense, quantity, sumOfOne);
             }
         }
@@ -37,7 +36,7 @@ public class ReportReader {
             for (String line : lines) {
                 String[] lineContents = line.split(",");
                 Integer month = Integer.parseInt(lineContents[0]);
-                BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(lineContents[1]));
+                Double amount = Double.parseDouble(lineContents[1]);
                 Boolean isExpense = Boolean.parseBoolean(lineContents[2]);
                 report.addRecord(month, amount, isExpense);
             }

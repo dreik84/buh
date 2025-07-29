@@ -1,13 +1,12 @@
 package com.example;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReportService {
 
-    private List<MonthlyReport> monthlyReports;
-    private List<YearlyReport> yearlyReports;
+    private final List<MonthlyReport> monthlyReports;
+    private final List<YearlyReport> yearlyReports;
 
     public ReportService() {
         monthlyReports = new ArrayList<>();
@@ -30,8 +29,8 @@ public class ReportService {
         System.out.println(yearlyReports);
 
         for (int i = 0; i < 12; i++) {
-            BigDecimal yearlyTotal = yearlyReports.get(0).getTotalByMonth(i);
-            BigDecimal monthlyTotal = monthlyReports.get(i).getTotal();
+            Double yearlyTotal = yearlyReports.get(0).getTotalByMonth(i);
+            Double monthlyTotal = monthlyReports.get(i).getTotal();
             if (!yearlyTotal.equals(monthlyTotal)) {
                 System.out.println("Расхождение в отчётах за " + i + " месяц");
             }
