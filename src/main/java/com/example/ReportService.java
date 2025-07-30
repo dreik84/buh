@@ -39,6 +39,12 @@ public class ReportService {
 
     public void printMonthlyReportsInfo() {
 
+        for (int i = 0; i < monthlyReports.size(); i++) {
+            MonthlyReport report = monthlyReports.get(i);
+            String prof = report.getMostProfitableProduct();
+
+            System.out.printf("Месяц %d %s", i, prof);
+        }
     }
 
     public void printYearlyReportInfo() {
