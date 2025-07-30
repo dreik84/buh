@@ -6,21 +6,21 @@ import java.util.StringJoiner;
 
 public class YearlyReport {
 
-    private final List<Record> records;
+    private final List<YearlyRecord> records;
 
     public YearlyReport() {
         records = new ArrayList<>();
     }
 
     public void addRecord(Integer month, Double amount, Boolean isExpense) {
-        Record record = new Record(month, amount, isExpense);
+        YearlyRecord record = new YearlyRecord(month, amount, isExpense);
         records.add(record);
     }
 
     public Double getTotalByMonth(int month) {
         Double total = 0.0;
 
-        for (Record record : records) {
+        for (YearlyRecord record : records) {
             if (record.month == month) {
                 if (record.isExpense) {
                     total -= record.amount;
@@ -41,15 +41,27 @@ public class YearlyReport {
         return sj.toString();
     }
 
-    private static class Record {
-        Integer month;
-        Double amount;
-        Boolean isExpense;
+    public static class YearlyRecord {
+        private final Integer month;
+        private final Double amount;
+        private final Boolean isExpense;
 
-        Record(Integer month, Double amount, Boolean isExpense) {
+        YearlyRecord(Integer month, Double amount, Boolean isExpense) {
             this.month = month;
             this.amount = amount;
             this.isExpense = isExpense;
+        }
+
+        public Integer getMonth() {
+            return month;
+        }
+
+        public Double getAmount() {
+            return amount;
+        }
+
+        public Boolean getExpense() {
+            return isExpense;
         }
     }
 }

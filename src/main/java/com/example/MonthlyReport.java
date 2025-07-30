@@ -6,21 +6,25 @@ import java.util.StringJoiner;
 
 public class MonthlyReport {
 
-    private final List<Record> records;
+    private final List<MonthlyRecord> records;
 
     public MonthlyReport() {
         records = new ArrayList<>();
     }
 
     public void addRecord(String itemName, Boolean isExpense, Integer quantity, Double sumOfOne) {
-        Record record = new Record(itemName, isExpense, quantity, sumOfOne);
+        MonthlyRecord record = new MonthlyRecord(itemName, isExpense, quantity, sumOfOne);
         records.add(record);
+    }
+
+    public List<MonthlyRecord> getRecords() {
+        return records;
     }
 
     public Double getTotal() {
         double total = 0.0;
 
-        for (Record record : records) {
+        for (MonthlyRecord record : records) {
             if (record.isExpense) {
                 total -= record.quantity * record.sumOfOne;
             } else {
@@ -39,26 +43,49 @@ public class MonthlyReport {
         return sj.toString();
     }
 
-    public String getMostProfitableProduct() {
+    public MonthlyRecord getMostProfitableProduct() {
 
         return records.stream()
-                .sorted((r1, r2) -> (int) ((r1.quantity * r1.sumOfOne) - (r2.quantity * r2.sumOfOne)))
-                .findFirst()
-                .get()
-                .itemName;
+                .filter(record -> !record.isExpense)
+                .min((r1, r2) -> (int) ((r1.quantity * r1.sumOfOne) - (r2.quantity * r2.sumOfOne)))
+                .get();
     }
 
-    private static class Record {
-        String itemName;
-        Boolean isExpense;
-        Integer quantity;
-        Double sumOfOne;
+    public MonthlyRecord getBiggestWasteProduct() {
 
-        Record(String itemName, Boolean isExpense, Integer quantity, Double sumOfOne) {
+        return records.stream()
+                .filter(record -> record.isExpense)
+                .max((r1, r2) -> (int) ((r1.quantity * r1.sumOfOne) - (r2.quantity * r2.sumOfOne)))
+                .get();
+    }
+
+    public static class MonthlyRecord {
+        private final String itemName;
+        private final Boolean isExpense;
+        private final Integer quantity;
+        private final Double sumOfOne;
+
+        public MonthlyRecord(String itemName, Boolean isExpense, Integer quantity, Double sumOfOne) {
             this.itemName = itemName;
             this.isExpense = isExpense;
             this.quantity = quantity;
             this.sumOfOne = sumOfOne;
+        }
+
+        public String getItemName() {
+            return itemName;
+        }
+
+        public Boolean getExpense() {
+            return isExpense;
+        }
+
+        public Integer getQuantity() {
+            return quantity;
+        }
+
+        public Double getSumOfOne() {
+            return sumOfOne;
         }
     }
 }
