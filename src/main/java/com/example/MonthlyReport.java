@@ -39,6 +39,15 @@ public class MonthlyReport {
         return sj.toString();
     }
 
+    public String getMostProfitableProduct() {
+
+        return records.stream()
+                .sorted((r1, r2) -> (int) ((r1.quantity * r1.sumOfOne) - (r2.quantity * r2.sumOfOne)))
+                .findFirst()
+                .get()
+                .itemName;
+    }
+
     private static class Record {
         String itemName;
         Boolean isExpense;
