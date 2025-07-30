@@ -38,12 +38,24 @@ public class ReportService {
     }
 
     public void printMonthlyReportsInfo() {
+        double maxProfitable = 0.0;
+        int maxIndex = 0;
 
-        for (int i = 0; i < monthlyReports.size(); i++) {
-            MonthlyReport report = monthlyReports.get(i);
-            String prof = report.getMostProfitableProduct();
+        for (MonthlyReport report : monthlyReports) {
+            var records = report.getRecords();
 
-            System.out.printf("Месяц %d %s", i, prof);
+            var mostProfitableRecord = report.getMostProfitableProduct();
+            var biggestWasteRecord = report.getBiggestWasteProduct();
+
+            for (int i = 0; i < records.size(); i++) {
+                var record = records.get(i);
+                double curProfitable = record.getQuantity() * record.getSumOfOne();
+
+                if (maxProfitable < curProfitable) {
+                    maxProfitable = curProfitable;
+                    maxIndex = i;
+                }
+            }
         }
     }
 
