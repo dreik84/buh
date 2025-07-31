@@ -63,5 +63,14 @@ public class YearlyReport {
         public Boolean getExpense() {
             return isExpense;
         }
+
+        @Override
+        public String toString() {
+            return "YearlyRecord{" +
+                    "month=" + month +
+                    ", amount=" + amount +
+                    ", isExpense=" + isExpense +
+                    '}';
+        }
     }
 }
