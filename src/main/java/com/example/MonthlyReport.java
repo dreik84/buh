@@ -35,14 +35,6 @@ public class MonthlyReport {
         return total;
     }
 
-    @Override
-    public String toString() {
-        StringJoiner sj = new StringJoiner(", ");
-
-        records.forEach(record -> sj.add(record.quantity + "*" + record.sumOfOne + "=" + getTotal()));
-        return sj.toString();
-    }
-
     public MonthlyRecord getMostProfitableProduct() {
         double prof = 0.0;
         MonthlyRecord res = null;
@@ -58,12 +50,6 @@ public class MonthlyReport {
         }
 
         return res;
-
-
-//        return records.stream()
-//                .filter(record -> !record.isExpense)
-//                .min((r1, r2) -> (int) ((r1.quantity * r1.sumOfOne) - (r2.quantity * r2.sumOfOne)))
-//                .get();
     }
 
     public MonthlyRecord getBiggestWasteProduct() {
@@ -81,11 +67,16 @@ public class MonthlyReport {
         }
 
         return res;
+    }
 
-//        return records.stream()
-//                .filter(record -> record.isExpense)
-//                .max((r1, r2) -> (int) ((r1.quantity * r1.sumOfOne) - (r2.quantity * r2.sumOfOne)))
-//                .get();
+    @Override
+    public String toString() {
+        StringJoiner sj = new StringJoiner(", ");
+
+        records.forEach(record -> sj.add(record.itemName + " " +
+                record.quantity + "*" + record.sumOfOne + "=" + getTotal()));
+
+        return sj.toString();
     }
 
     public static class MonthlyRecord {

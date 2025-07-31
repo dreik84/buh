@@ -7,14 +7,20 @@ import java.util.StringJoiner;
 public class YearlyReport {
 
     private final List<YearlyRecord> records;
+    private final int year;
 
-    public YearlyReport() {
+    public YearlyReport(int year) {
+        this.year = year;
         records = new ArrayList<>();
     }
 
     public void addRecord(Integer month, Double amount, Boolean isExpense) {
         YearlyRecord record = new YearlyRecord(month, amount, isExpense);
         records.add(record);
+    }
+
+    public int getYear() {
+        return year;
     }
 
     public Double getTotalByMonth(int month) {

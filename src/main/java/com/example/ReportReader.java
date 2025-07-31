@@ -28,7 +28,7 @@ public class ReportReader {
 
     public static YearlyReport getYearlyReport(int year) {
         String file = readFileContentsOrNull("src/main/resources/" + "y." + year + ".csv");
-        YearlyReport report = new YearlyReport();
+        YearlyReport report = new YearlyReport(year);
 
         if (file != null) {
             String[] lines = file.split("\\n");

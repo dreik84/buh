@@ -6,11 +6,11 @@ import java.util.List;
 public class ReportService {
 
     private final List<MonthlyReport> monthlyReports;
-    private final List<YearlyReport> yearlyReports;
+    private final YearlyReport yearlyReport;
 
     public ReportService() {
         monthlyReports = new ArrayList<>();
-        yearlyReports = new ArrayList<>(12);
+        yearlyReport = null;
     }
 
     public void readAllMonthlyReports(int year) {
@@ -20,16 +20,16 @@ public class ReportService {
     }
 
     public void readYearlyReport(int year) {
-        yearlyReports.add(ReportReader.getYearlyReport(year));
+        ReportReader.getYearlyReport(year);
     }
 
     public void compareReports() {
 
         System.out.println(monthlyReports);
-        System.out.println(yearlyReports);
+        System.out.println(yearlyReport);
 
         for (int i = 0; i < 12; i++) {
-            Double yearlyTotal = yearlyReports.get(0).getTotalByMonth(i);
+            Double yearlyTotal = yearlyReport.getTotalByMonth(i);
             Double monthlyTotal = monthlyReports.get(i).getTotal();
             if (!yearlyTotal.equals(monthlyTotal)) {
                 System.out.println("Расхождение в отчётах за " + i + " месяц");
@@ -41,23 +41,28 @@ public class ReportService {
 
         for (int i = 0; i < monthlyReports.size(); i++) {
             MonthlyReport report = monthlyReports.get(i);
+            String resLine = "Месяц " + i;
 
-            var mostProfitableRecord = report.getMostProfitableProduct();
-            var biggestWasteRecord = report.getBiggestWasteProduct();
+            var mostProfitable = report.getMostProfitableProduct();
+            var biggestWaste = report.getBiggestWasteProduct();
 
-            System.out.println(mostProfitableRecord);
-            System.out.println(biggestWasteRecord);
+            resLine += ", самый прибыльный товар: ";
+            resLine += (mostProfitable == null) ? null : mostProfitable.getItemName() + " на сумму: " +
+                    mostProfitable.getSumOfOne() * mostProfitable.getQuantity();
 
-            System.out.printf("Месяц %d, самый прибыльный товар %s на сумму %d руб, трата %s на сумму %d руб",
-                    i,
-                    mostProfitableRecord.getItemName(),
-                    mostProfitableRecord.getSumOfOne() * mostProfitableRecord.getQuantity(),
-                    biggestWasteRecord.getItemName(),
-                    biggestWasteRecord.getSumOfOne() * biggestWasteRecord.getQuantity());
+            resLine += ", самая большая трата: ";
+            resLine += (biggestWaste == null) ? null : biggestWaste.getItemName() + " на сумму: " +
+                    biggestWaste.getSumOfOne() * biggestWaste.getQuantity() + " .";
+
+            System.out.println(resLine);
         }
     }
 
     public void printYearlyReportInfo() {
+        String resLine = "Год: ";
 
+        resLine += (yearlyReport == null) ? null : yearlyReport.getYear();
+
+        System.out.println(resLine);
     }
 }
