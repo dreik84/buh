@@ -44,19 +44,48 @@ public class MonthlyReport {
     }
 
     public MonthlyRecord getMostProfitableProduct() {
+        double prof = 0.0;
+        MonthlyRecord res = null;
 
-        return records.stream()
-                .filter(record -> !record.isExpense)
-                .min((r1, r2) -> (int) ((r1.quantity * r1.sumOfOne) - (r2.quantity * r2.sumOfOne)))
-                .get();
+        for (MonthlyRecord record : records) {
+            if (!record.getExpense()) {
+                double curProf = record.getQuantity() * record.getSumOfOne();
+                if (prof < curProf) {
+                    prof = curProf;
+                    res = record;
+                }
+            }
+        }
+
+        return res;
+
+
+//        return records.stream()
+//                .filter(record -> !record.isExpense)
+//                .min((r1, r2) -> (int) ((r1.quantity * r1.sumOfOne) - (r2.quantity * r2.sumOfOne)))
+//                .get();
     }
 
     public MonthlyRecord getBiggestWasteProduct() {
+        double waste = 0.0;
+        MonthlyRecord res = null;
 
-        return records.stream()
-                .filter(record -> record.isExpense)
-                .max((r1, r2) -> (int) ((r1.quantity * r1.sumOfOne) - (r2.quantity * r2.sumOfOne)))
-                .get();
+        for (MonthlyRecord record : records) {
+            if (record.getExpense()) {
+                double curWaste = record.getQuantity() * record.getSumOfOne();
+                if (waste < curWaste) {
+                    waste = curWaste;
+                    res = record;
+                }
+            }
+        }
+
+        return res;
+
+//        return records.stream()
+//                .filter(record -> record.isExpense)
+//                .max((r1, r2) -> (int) ((r1.quantity * r1.sumOfOne) - (r2.quantity * r2.sumOfOne)))
+//                .get();
     }
 
     public static class MonthlyRecord {
@@ -86,6 +115,16 @@ public class MonthlyReport {
 
         public Double getSumOfOne() {
             return sumOfOne;
+        }
+
+        @Override
+        public String toString() {
+            return "MonthlyRecord{" +
+                    "itemName='" + itemName + '\'' +
+                    ", isExpense=" + isExpense +
+                    ", quantity=" + quantity +
+                    ", sumOfOne=" + sumOfOne +
+                    '}';
         }
     }
 }
