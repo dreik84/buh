@@ -6,7 +6,7 @@ import java.util.List;
 public class ReportService {
 
     private final List<MonthlyReport> monthlyReports;
-    private final YearlyReport yearlyReport;
+    private YearlyReport yearlyReport;
 
     public ReportService() {
         monthlyReports = new ArrayList<>();
@@ -20,7 +20,7 @@ public class ReportService {
     }
 
     public void readYearlyReport(int year) {
-        ReportReader.getYearlyReport(year);
+        yearlyReport = ReportReader.getYearlyReport(year);
     }
 
     public void compareReports() {
@@ -61,7 +61,7 @@ public class ReportService {
     public void printYearlyReportInfo() {
         String resLine = "Год: ";
 
-        resLine += (yearlyReport == null) ? null : yearlyReport.getYear();
+        resLine += (yearlyReport == null) ? null : yearlyReport.getYear() + ". " + yearlyReport.getProfit();
 
         System.out.println(resLine);
     }
