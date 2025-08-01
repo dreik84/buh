@@ -17,10 +17,6 @@ public class MonthlyReport {
         records.add(record);
     }
 
-    public List<MonthlyRecord> getRecords() {
-        return records;
-    }
-
     public Double getTotal() {
         double total = 0.0;
 

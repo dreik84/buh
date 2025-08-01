@@ -39,6 +39,31 @@ public class YearlyReport {
         return total;
     }
 
+    public String getProfit() {
+        StringBuilder profit = new StringBuilder();
+
+        for (int i = 0; i < 12; i++) {
+            double res = 0.0;
+
+            for (YearlyRecord record : findByMonth(i)) {
+                res += (record.getExpense()) ? -record.getAmount() : record.getAmount();
+            }
+            profit.append("Месяц ").append(i).append(", прибыль: ").append(res).append(". ");
+        }
+
+        return profit.toString();
+    }
+
+    private List<YearlyRecord> findByMonth(int month) {
+        List<YearlyRecord> list = new ArrayList<>();
+
+        for (YearlyRecord record : records) {
+            if (record.getMonth() == month) list.add(record);
+        }
+
+        return list;
+    }
+
     @Override
     public String toString() {
         StringJoiner sj = new StringJoiner(", ");
