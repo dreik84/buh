@@ -1,5 +1,9 @@
 package com.example;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
@@ -36,7 +40,7 @@ public class MonthlyReport {
         MonthlyRecord res = null;
 
         for (MonthlyRecord record : records) {
-            if (!record.getExpense()) {
+            if (!record.isExpense) {
                 double curProf = record.getQuantity() * record.getSumOfOne();
                 if (prof < curProf) {
                     prof = curProf;
@@ -53,7 +57,7 @@ public class MonthlyReport {
         MonthlyRecord res = null;
 
         for (MonthlyRecord record : records) {
-            if (record.getExpense()) {
+            if (record.isExpense) {
                 double curWaste = record.getQuantity() * record.getSumOfOne();
                 if (waste < curWaste) {
                     waste = curWaste;
@@ -75,43 +79,13 @@ public class MonthlyReport {
         return sj.toString();
     }
 
+    @Getter
+    @AllArgsConstructor
+    @ToString
     public static class MonthlyRecord {
         private final String itemName;
         private final Boolean isExpense;
         private final Integer quantity;
         private final Double sumOfOne;
-
-        public MonthlyRecord(String itemName, Boolean isExpense, Integer quantity, Double sumOfOne) {
-            this.itemName = itemName;
-            this.isExpense = isExpense;
-            this.quantity = quantity;
-            this.sumOfOne = sumOfOne;
-        }
-
-        public String getItemName() {
-            return itemName;
-        }
-
-        public Boolean getExpense() {
-            return isExpense;
-        }
-
-        public Integer getQuantity() {
-            return quantity;
-        }
-
-        public Double getSumOfOne() {
-            return sumOfOne;
-        }
-
-        @Override
-        public String toString() {
-            return "MonthlyRecord{" +
-                    "itemName='" + itemName + '\'' +
-                    ", isExpense=" + isExpense +
-                    ", quantity=" + quantity +
-                    ", sumOfOne=" + sumOfOne +
-                    '}';
-        }
     }
 }

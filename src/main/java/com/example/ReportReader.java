@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 public class ReportReader {
 
-    public static MonthlyReport getMouthlyReport(int year, int month) {
+    public static MonthlyReport readMouthlyReport(int year, int month) {
         String file = readFileContentsOrNull("src/main/resources/" + "m." + year + month + ".csv");
         MonthlyReport report = new MonthlyReport();
 
@@ -26,7 +26,7 @@ public class ReportReader {
         return report;
     }
 
-    public static YearlyReport getYearlyReport(int year) {
+    public static YearlyReport readYearlyReport(int year) {
         String file = readFileContentsOrNull("src/main/resources/" + "y." + year + ".csv");
         YearlyReport report = new YearlyReport(year);
 

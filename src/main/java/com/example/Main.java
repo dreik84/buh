@@ -15,11 +15,11 @@ public class Main {
             switch (input) {
                 case 1:
                     System.out.print("Укажите год: ");
-                    service.readAllMonthlyReports(scanner.nextInt());
+                    service.getAllMonthlyReports(scanner.nextInt());
                     break;
                 case 2:
                     System.out.print("Укажите год: ");
-                    service.readYearlyReport(scanner.nextInt());
+                    service.getYearlyReport(scanner.nextInt());
                     break;
                 case 3:
                     service.compareReports();

@@ -1,5 +1,10 @@
 package com.example;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
@@ -7,6 +12,7 @@ import java.util.StringJoiner;
 public class YearlyReport {
 
     private final List<YearlyRecord> records;
+    @Getter
     private final int year;
 
     public YearlyReport(int year) {
@@ -17,10 +23,6 @@ public class YearlyReport {
     public void addRecord(Integer month, Double amount, Boolean isExpense) {
         YearlyRecord record = new YearlyRecord(month, amount, isExpense);
         records.add(record);
-    }
-
-    public int getYear() {
-        return year;
     }
 
     public Double getTotalByMonth(int month) {
@@ -46,7 +48,7 @@ public class YearlyReport {
             double res = 0.0;
 
             for (YearlyRecord record : findByMonth(i)) {
-                res += (record.getExpense()) ? -record.getAmount() : record.getAmount();
+                res += (record.isExpense) ? -record.getAmount() : record.getAmount();
             }
             profit.append("Месяц ").append(i).append(", прибыль: ").append(res).append(". ");
         }
@@ -64,7 +66,7 @@ public class YearlyReport {
         return list;
     }
 
-    public double getAverageExpense() {
+    public String getAverageExpense() {
         double expense = 0.0;
 
         for (YearlyRecord record : records) {
@@ -73,7 +75,7 @@ public class YearlyReport {
             }
         }
 
-        return  Math.round(expense / 12);
+        return new DecimalFormat("#.##").format(expense / 12);
     }
 
     public double getAverageProfit() {
@@ -85,7 +87,7 @@ public class YearlyReport {
             }
         }
 
-        return Math.round(expense / 12);
+        return Math.round(expense / 12 * 100.0) / 100.0;
     }
 
     @Override
@@ -96,36 +98,12 @@ public class YearlyReport {
         return sj.toString();
     }
 
+    @Getter
+    @AllArgsConstructor
+    @ToString
     public static class YearlyRecord {
         private final Integer month;
         private final Double amount;
         private final Boolean isExpense;
-
-        YearlyRecord(Integer month, Double amount, Boolean isExpense) {
-            this.month = month;
-            this.amount = amount;
-            this.isExpense = isExpense;
-        }
-
-        public Integer getMonth() {
-            return month;
-        }
-
-        public Double getAmount() {
-            return amount;
-        }
-
-        public Boolean getExpense() {
-            return isExpense;
-        }
-
-        @Override
-        public String toString() {
-            return "YearlyRecord{" +
-                    "month=" + month +
-                    ", amount=" + amount +
-                    ", isExpense=" + isExpense +
-                    '}';
-        }
     }
 }

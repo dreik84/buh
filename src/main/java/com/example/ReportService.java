@@ -13,24 +13,21 @@ public class ReportService {
         yearlyReport = null;
     }
 
-    public void readAllMonthlyReports(int year) {
+    public void getAllMonthlyReports(int year) {
         for (int i = 0; i < 12; i++) {
-            monthlyReports.add(ReportReader.getMouthlyReport(year, i));
+            monthlyReports.add(ReportReader.readMouthlyReport(year, i));
         }
     }
 
-    public void readYearlyReport(int year) {
-        yearlyReport = ReportReader.getYearlyReport(year);
+    public void getYearlyReport(int year) {
+        yearlyReport = ReportReader.readYearlyReport(year);
     }
 
     public void compareReports() {
-
-        System.out.println(monthlyReports);
-        System.out.println(yearlyReport);
-
         for (int i = 0; i < 12; i++) {
             Double yearlyTotal = yearlyReport.getTotalByMonth(i);
             Double monthlyTotal = monthlyReports.get(i).getTotal();
+
             if (!yearlyTotal.equals(monthlyTotal)) {
                 System.out.println("Расхождение в отчётах за " + i + " месяц");
             }
