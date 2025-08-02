@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedMap;
 
 public class ReportService {
 
@@ -59,9 +60,12 @@ public class ReportService {
     }
 
     public void printYearlyReportInfo() {
-        String resLine = "Год: ";
+        if (yearlyReport == null) return;
 
-        resLine += (yearlyReport == null) ? null : yearlyReport.getYear() + ". " + yearlyReport.getProfit();
+        String resLine = "Год: " + yearlyReport.getYear() + "\n";
+        resLine += yearlyReport.getProfit() + "\n";
+        resLine += "Средний расход: " + yearlyReport.getAverageExpense() + "\n";
+        resLine += "Средний доход: " + yearlyReport.getAverageProfit();
 
         System.out.println(resLine);
     }
