@@ -64,6 +64,30 @@ public class YearlyReport {
         return list;
     }
 
+    public double getAverageExpense() {
+        double expense = 0.0;
+
+        for (YearlyRecord record : records) {
+            if (record.isExpense) {
+                expense += record.getAmount();
+            }
+        }
+
+        return  Math.round(expense / 12);
+    }
+
+    public double getAverageProfit() {
+        double expense = 0.0;
+
+        for (YearlyRecord record : records) {
+            if (!record.isExpense) {
+                expense += record.getAmount();
+            }
+        }
+
+        return Math.round(expense / 12);
+    }
+
     @Override
     public String toString() {
         StringJoiner sj = new StringJoiner(", ");
