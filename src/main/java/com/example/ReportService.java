@@ -9,7 +9,7 @@ public class ReportService {
     private YearlyReport yearlyReport;
 
     public ReportService() {
-        monthlyReports = new ArrayList<>();
+        monthlyReports = new ArrayList<>(12);
         yearlyReport = null;
     }
 
